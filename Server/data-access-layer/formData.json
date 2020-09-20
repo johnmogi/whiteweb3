@@ -15,93 +15,30 @@
     },
     {
         "id": 3,
-        "name": "12",
-        "mail": "111111",
-        "phone": "12",
-        "address": "1"
+        "name": "tester",
+        "mail": "info@kodo.press",
+        "phone": "0508282456",
+        "address": "haassis 7, apt 19, Pardes Hanna"
     },
     {
         "id": 4,
-        "name": "or",
-        "mail": "oooooo",
-        "phone": "or",
-        "address": "o"
+        "name": "tester4",
+        "mail": "tester4",
+        "phone": "tester4",
+        "address": "tester4"
     },
     {
         "id": 5,
-        "name": "3ssss",
-        "mail": "3sssssss",
-        "phone": "3ssssss",
-        "address": "3ssssss"
+        "name": "bester4",
+        "mail": "bester4",
+        "phone": "bester4",
+        "address": "bester4"
     },
     {
         "id": 6,
-        "name": "ccc",
-        "mail": "3sssssss",
-        "phone": "3ssssss",
-        "address": "3ssssss"
-    },
-    {
-        "id": 7,
-        "name": "jonathan moguillansky",
-        "mail": "sssssss",
-        "phone": "s",
-        "address": "haasis 7 apt. 19"
-    },
-    {
-        "id": 8,
-        "name": "jonathan moguillansky",
-        "mail": "sssssss",
-        "phone": "s",
-        "address": "haasis 7 apt. 19"
-    },
-    {
-        "id": 9,
-        "name": "sd",
-        "mail": "sdsdsdsd",
-        "phone": "sd",
-        "address": "ss"
-    },
-    {
-        "id": 10,
-        "name": "s",
-        "mail": "ssssss",
-        "phone": "ss",
-        "address": "s"
-    },
-    {
-        "id": 11,
-        "name": "ss",
-        "mail": "ssssss",
-        "phone": "ss",
-        "address": "2323"
-    },
-    {
-        "id": 12,
-        "name": "12",
-        "mail": "121212",
-        "phone": "12",
-        "address": "12"
-    },
-    {
-        "id": 13,
-        "name": "99",
-        "mail": "999999",
-        "phone": "99",
-        "address": "9"
-    },
-    {
-        "id": 14,
-        "name": "34",
-        "mail": "3434343",
-        "phone": "34",
-        "address": "3"
-    },
-    {
-        "id": 15,
-        "name": "34",
-        "mail": "3434343",
-        "phone": "34",
-        "address": "3"
+        "name": "cccc",
+        "mail": "cccccc",
+        "phone": "cc",
+        "address": "c"
     }
 ]
