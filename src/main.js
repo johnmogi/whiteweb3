@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Button, Form, Table } from "react-bootstrap";
-
 const API = "http://localhost:3000/api/contacts";
 
 class Main extends Component {
@@ -18,37 +17,18 @@ class Main extends Component {
     };
   }
 
-  fetchContacts = () => {
+  componentDidMount() {
     fetch(API)
       .then((response) => response.json())
       .then((contacts) => this.setState({ contacts }));
-  };
-
-  componentDidMount() {
-    this.fetchContacts();
   }
 
-  redraw = () => {
-    let valid = this.state.valid;
-    if (valid) {
-      this.fetchContacts();
-      console.log(this.state.contacts);
-      fetch(API)
-      .then((response) => response.json())
-      .then((contacts) => this.setState({ contacts: contacts }));
-              setTimeout(() => {
-let contacts = this.state.contacts
-                this.setState({ contacts: contacts });
-      }, 5000);
-      this.setState({ valid: false });
-    }
-  };
   addContact = () => {
     let name = this.state.name;
     let mail = this.state.mail;
     let phone = this.state.phone;
     let address = this.state.address;
-    let id = this.state.contacts.length+1;
+    let id = this.state.contacts.length + 1;
     if (!name || !mail || !phone || !address) {
       alert("אחד מהשדות חסרים, בדקו שנית");
       return false;
@@ -59,8 +39,13 @@ let contacts = this.state.contacts
     // this.state.valid = true;
     this.setState({ valid: true });
     const senData = `{"id":${id},"name":"${name}","mail":"${mail}","phone":"${phone}","address":"${address}"}`;
-    console.log(senData);
-
+    const innerUpdate = {
+      id: `${id}`,
+      name: `${name}`,
+      mail: `${mail}`,
+      phone: `${phone}`,
+      address: `${address}`,
+    };
     const options = {
       method: "POST",
       headers: {
@@ -73,7 +58,10 @@ let contacts = this.state.contacts
       .then((response) => response.json())
       .then(() => alert(name + " הרשומה עודכנה, תודה "))
       .catch((err) => alert(err.message));
-    this.redraw();
+    // manual push into state:
+    let contacts = this.state.contacts;
+    contacts.push(innerUpdate);
+    this.setState({ contacts: contacts });
   };
 
   setFormParams = (event) => {
@@ -81,47 +69,100 @@ let contacts = this.state.contacts
     let val = event.target.value;
     this.setState({ [nam]: val });
   };
-  sortByName = () => {
-    let ordered = this.state.ordered;
-    let contacts = this.state.contacts;
-    if (!contacts) {
-      return false;
-    }
-    if (!ordered) {
-      contacts.sort(function (a, b) {
-        a = a.name.toLowerCase();
-        b = b.name.toLowerCase();
-        return a < b ? -1 : a > b ? 1 : 0;
-      });
-      this.redraw();
-      this.setState({ ordered: true });
-      return contacts;
-    } else {
-      contacts.reverse(function (a, b) {
-        a = a.name.toLowerCase();
-        b = b.name.toLowerCase();
-        return a < b ? -1 : a > b ? 1 : 0;
-      });
-      this.redraw();
-      this.setState({ ordered: false });
-    }
-  };
 
-  sortById = () => {
+  sortBy = (key) => {
     let ordered = this.state.ordered;
     let contacts = this.state.contacts;
-    if (!ordered) {
-      this.setState({ ordered: true });
-      contacts.sort(function (b, a) {
-        return a.id - b.id;
-      });
-    } else {
-      contacts.reverse(function (b, a) {
-        return a.id - b.id;
-      });
-      this.redraw();
-      this.setState({ ordered: false });
+    // a bit complex code since key deosn't inherit value in inner scope object sort
+    switch (key) {
+      case (key = "id"):
+        if (!ordered) {
+          this.setState({ ordered: true });
+          contacts.sort(function (b, a) {
+            return a.id - b.id;
+          });
+        } else {
+          this.setState({ ordered: false });
+          contacts.sort(function (a, b) {
+            return a.id - b.id;
+          });
+        }
+        break;
+      case (key = "name"):
+        if (!ordered) {
+          this.setState({ ordered: true });
+          contacts.sort(function (a, b) {
+            a = a.name.toUpperCase();
+            b = b.name.toUpperCase();
+            return a < b ? -1 : a > b ? 1 : 0;
+          });
+          break;
+        } else {
+          this.setState({ ordered: false });
+          contacts.reverse(function (a, b) {
+            a = a.name.toUpperCase();
+            b = b.name.toUpperCase();
+            return a < b ? -1 : a > b ? 1 : 0;
+          });
+          break;
+        }
+        case (key = "phone"):
+          if (!ordered) {
+            this.setState({ ordered: true });
+            contacts.sort(function (a, b) {
+              a = a.phone.toUpperCase();
+              b = b.phone.toUpperCase();
+              return a < b ? -1 : a > b ? 1 : 0;
+            });
+            break;
+          } else {
+            this.setState({ ordered: false });
+            contacts.reverse(function (a, b) {
+              a = a.phone.toUpperCase();
+              b = b.phone.toUpperCase();
+              return a < b ? -1 : a > b ? 1 : 0;
+            });
+            break;
+          }
+          case (key = "mail"):
+            if (!ordered) {
+              this.setState({ ordered: true });
+              contacts.sort(function (a, b) {
+                a = a.mail.toUpperCase();
+                b = b.mail.toUpperCase();
+                return a < b ? -1 : a > b ? 1 : 0;
+              });
+              break;
+            } else {
+              this.setState({ ordered: false });
+              contacts.reverse(function (a, b) {
+                a = a.mail.toUpperCase();
+                b = b.mail.toUpperCase();
+                return a < b ? -1 : a > b ? 1 : 0;
+              });
+              break;
+            }
+            case (key = "address"):
+              if (!ordered) {
+                this.setState({ ordered: true });
+                contacts.sort(function (a, b) {
+                  a = a.address.toUpperCase();
+                  b = b.address.toUpperCase();
+                  return a < b ? -1 : a > b ? 1 : 0;
+                });
+                break;
+              } else {
+                this.setState({ ordered: false });
+                contacts.reverse(function (a, b) {
+                  a = a.address.toUpperCase();
+                  b = b.address.toUpperCase();
+                  return a < b ? -1 : a > b ? 1 : 0;
+                });
+                break;
+              }
+      default:
     }
+    this.setState({ contacts: contacts });
   };
 
   render() {
@@ -156,7 +197,6 @@ let contacts = this.state.contacts
               placeholder="כתובת המייל שלכם"
               name="mail"
               required
-              pattern="/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/"
               onChange={this.setFormParams}
             />
             <Form.Text className="text-muted">לעולם לא נשתף אותה</Form.Text>
@@ -180,11 +220,11 @@ let contacts = this.state.contacts
         <Table striped bordered hover className="col-6">
           <thead>
             <tr>
-              <th onClick={this.sortById}>#</th>
-              <th onClick={this.sortByName}>שם</th>
-              <th onClick={this.sortByName}>טלפון</th>
-              <th onClick={this.sortByName}>מייל</th>
-              <th onClick={this.sortByName}>כתובת</th>
+              <th onClick={() => this.sortBy("id")}># </th>
+              <th onClick={() => this.sortBy("name")}>שם</th>
+              <th onClick={() => this.sortBy("phone")}>טלפון</th>
+              <th onClick={() => this.sortBy("mail")}>מייל</th>
+              <th onClick={() => this.sortBy("address")}>כתובת</th>
             </tr>
           </thead>
           <tbody>
@@ -203,4 +243,7 @@ let contacts = this.state.contacts
     );
   }
 }
+
+
+
 export default Main;
