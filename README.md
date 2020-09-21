@@ -1,3 +1,3 @@
-http://phpstack-475901-1494912.cloudwaysapps.com/build/index.html
+http://172.105.246.84:5000/
 
-http://139.162.162.178:3000/api/contacts
+http://172.105.246.84:3000/api/contacts
